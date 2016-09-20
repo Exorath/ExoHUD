@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.impl.title;
+package com.exorath.exoHUD.libs.title;
 
 import com.exorath.versions.api.Version;
 import com.exorath.versions.api.VersionAPI;

@@ -14,9 +14,33 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.api;
+package com.exorath.exoHUD;
 
 /**
- * Created by toonsev on 9/11/2016.
+ * Created by toonsev on 8/30/2016.
  */
-public class HUDTextTest {}
+public interface HUDLocation {
+    /**
+     * Adds a text to this
+     * @param text
+     * @param priority
+     */
+    void addText(HUDText text, double priority);
+    /**
+     * Adds a text to this
+     * @param text
+     * @param priority
+     */
+    void addText(HUDText text, double priority, HUDRemover remover);
+
+    void addPackage(HUDPackage hudPackage);
+
+    void removeText(HUDText text);
+
+    void removePackage(HUDPackage hudPackage);
+
+    void ignore(double limit);
+
+    boolean setActive(boolean active);
+
+}

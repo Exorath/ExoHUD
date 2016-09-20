@@ -14,9 +14,8 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.api.texts;
+package com.exorath.exoHUD.texts;
 
-import io.reactivex.subscribers.TestSubscriber;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.junit.Before;
 import org.junit.Test;

@@ -14,11 +14,9 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.impl;
+package com.exorath.exoHUD;
 
 /**
- * Created by toonsev on 8/30/2016.
+ * Created by toonsev on 9/11/2016.
  */
-public class IHUD {
-
-}
+public class HUDTextTest {}

@@ -14,10 +14,15 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.api;
+package com.exorath.exoHUD;
+
+import java.util.List;
 
 /**
- * Created by toonsev on 8/30/2016.
+ * Created by toonsev on 9/14/2016.
  */
-public interface HUD {
+public interface HUDPackage {
+    List<HUDText> getTexts();
+    double getPriority();
+
 }

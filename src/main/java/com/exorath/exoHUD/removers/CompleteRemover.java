@@ -14,17 +14,28 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.impl.title;
+package com.exorath.exoHUD.removers;
 
-import com.exorath.versions.api.VersionHandler;
-import org.bukkit.entity.Player;
+import com.exorath.exoHUD.HUDRemover;
+import io.reactivex.Completable;
+import io.reactivex.subjects.ReplaySubject;
+
+
 
 /**
- * Created by toonsev on 9/3/2016.
+ * TODO make onXXX more observable.
+ * Created by toonsev on 9/17/2016.
  */
-public interface TitleHandler extends VersionHandler {
+public class CompleteRemover implements HUDRemover {
+    private ReplaySubject completed = ReplaySubject.create();
 
-    void send(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String title, String subtitle);
+    @Override
+    public void onComplete() {
+        completed.onComplete();
+    }
 
-    void clear(Player player);
+    @Override
+    public Completable getRemoveCompletable() {
+        return completed.toCompletable();
+    }
 }

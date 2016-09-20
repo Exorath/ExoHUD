@@ -14,9 +14,9 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.api.texts;
+package com.exorath.exoHUD.texts;
 
-import com.exorath.exoHUD.api.HUDText;
+import com.exorath.exoHUD.HUDText;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;

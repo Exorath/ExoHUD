@@ -35,12 +35,22 @@ public interface HUDLocation {
 
     void addPackage(HUDPackage hudPackage);
 
-    void removeText(HUDText text);
+    boolean removeText(HUDText text);
 
-    void removePackage(HUDPackage hudPackage);
+    boolean removePackage(HUDPackage hudPackage);
 
-    void ignore(double limit);
+    /**
+     * Hides HUDTexts and packages from displaying if their priority is under the provided maxPriority.
+     * Note that as soon as this threshold is lowered the hidden texts will display again.
+     *
+     * @param priorityThreshold any text or package with a priority lower then this will not display.
+     */
+    void hide(double priorityThreshold);
 
-    boolean setActive(boolean active);
+    /**
+     * Hides this location completely.
+     * Note that as soon as this threshold is lowered the hidden texts will display again.
+     */
+    void hide();
 
 }

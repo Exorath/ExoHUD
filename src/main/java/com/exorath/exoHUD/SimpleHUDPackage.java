@@ -16,17 +16,25 @@
 
 package com.exorath.exoHUD;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by toonsev on 9/14/2016.
+ * Created by toonsev on 9/21/2016.
  */
-public interface HUDPackage {
-    List<HUDText> getTexts();
-    double getPriority();
+public class SimpleHUDPackage implements HUDPackage {
+    private List<HUDText> texts;
+    private double priority;
+    public SimpleHUDPackage(List<HUDText> texts, double priority){
+        this.texts = texts;
+        this.priority = priority;
+    }
+    @Override
+    public List<HUDText> getTexts() {
+        return texts;
+    }
 
-    static HUDPackage create(List<HUDText> texts, double priority){
-        return new SimpleHUDPackage(texts, priority);
+    @Override
+    public double getPriority() {
+        return priority;
     }
 }

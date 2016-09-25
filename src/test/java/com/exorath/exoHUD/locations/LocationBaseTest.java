@@ -14,19 +14,11 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD;
-
-import java.util.Comparator;
-import java.util.List;
+package com.exorath.exoHUD.locations;
 
 /**
- * Created by toonsev on 9/14/2016.
+ * Created by toonsev on 9/25/2016.
  */
-public interface HUDPackage {
+public class LocationBaseTest {
 
-    List<HUDText> getTexts();
-
-    static HUDPackage create(List<HUDText> texts){
-        return new SimpleHUDPackage(texts);
-    }
 }

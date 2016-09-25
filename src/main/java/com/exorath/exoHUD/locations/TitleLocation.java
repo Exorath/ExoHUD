@@ -16,59 +16,38 @@
 
 package com.exorath.exoHUD.locations;
 
-import com.exorath.exoHUD.HUDLocation;
-import com.exorath.exoHUD.HUDPackage;
-import com.exorath.exoHUD.HUDRemover;
-import com.exorath.exoHUD.HUDText;
+import com.exorath.exoHUD.*;
+import com.exorath.exoHUD.libs.title.TitleHandler;
+import com.exorath.exoHUD.removers.NeverRemover;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.TreeSet;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by toonsev on 9/20/2016.
  */
-public class TitleLocation implements HUDLocation {
-    private TreeSet<HUDPackage> packageQueue = new TreeSet<>();
-    @Override
-    public void addText(HUDText text, double priority) {
-        packageQueue.add(HUDPackage.create(Arrays.asList(text), priority));
+public class TitleLocation extends LocationBase {
+    private TitleHandler titleHandler;
+
+
+    public TitleLocation(TitleHandler titleHandler){
+        this.titleHandler = titleHandler;
     }
 
     @Override
-    public void addText(HUDText text, double priority, HUDRemover remover) {
-        packageQueue.add(HUDPackage.create(Arrays.asList(text), priority));
-        //Add remover
-    }
-
-    @Override
-    public void addPackage(HUDPackage hudPackage) {
-        packageQueue.add(hudPackage);
-    }
-
-    @Override
-    public boolean removeText(HUDText text) {
-        for(HUDPackage hudPackage : packageQueue)
-            if(hudPackage.getTexts().contains(text))
-                return removePackage(hudPackage);
-        return false;
-    }
-
-    @Override
-    public boolean removePackage(HUDPackage hudPackage) {
-        boolean removed = packageQueue.remove(hudPackage);
-        if(removed){
-
-        }
-        return removed;
-    }
-
-    @Override
-    public void hide(double limit) {
+    public void onDisplayRemove(DisplayPackage displayPackage) {
 
     }
 
     @Override
-    public void hide(){
+    public void onDisplay(DisplayPackage displayPackage) {
+
+    }
+
+    @Override
+    public void onHide(boolean hidden) {
 
     }
 }

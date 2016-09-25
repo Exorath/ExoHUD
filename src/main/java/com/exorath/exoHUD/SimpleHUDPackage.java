@@ -23,18 +23,14 @@ import java.util.List;
  */
 public class SimpleHUDPackage implements HUDPackage {
     private List<HUDText> texts;
-    private double priority;
-    public SimpleHUDPackage(List<HUDText> texts, double priority){
+
+    public SimpleHUDPackage(List<HUDText> texts) {
         this.texts = texts;
-        this.priority = priority;
     }
+
     @Override
     public List<HUDText> getTexts() {
         return texts;
     }
 
-    @Override
-    public double getPriority() {
-        return priority;
-    }
 }

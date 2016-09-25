@@ -20,37 +20,33 @@ package com.exorath.exoHUD;
  * Created by toonsev on 8/30/2016.
  */
 public interface HUDLocation {
+
+    /**
+    DisplayPackage addText(HUDText text);
     /**
      * Adds a text to this
      * @param text
-     * @param priority
      */
-    void addText(HUDText text, double priority);
-    /**
-     * Adds a text to this
-     * @param text
-     * @param priority
-     */
-    void addText(HUDText text, double priority, HUDRemover remover);
+    DisplayPackage addText(HUDText text, DisplayProperties properties);
 
-    void addPackage(HUDPackage hudPackage);
+    DisplayPackage addHUDPackage(HUDPackage hudPackage);
 
-    boolean removeText(HUDText text);
+    void addDisplayPackage(DisplayPackage displayPackage);
 
-    boolean removePackage(HUDPackage hudPackage);
+    boolean removeDisplayPackage(DisplayPackage displayPackage);
 
     /**
      * Hides HUDTexts and packages from displaying if their priority is under the provided maxPriority.
      * Note that as soon as this threshold is lowered the hidden texts will display again.
      *
-     * @param priorityThreshold any text or package with a priority lower then this will not display.
+     * @param hideThreshold any text or package with a priority lower then this will not display.
      */
-    void hide(double priorityThreshold);
+    void setHideThreshold(Double hideThreshold);
 
     /**
      * Hides this location completely.
      * Note that as soon as this threshold is lowered the hidden texts will display again.
      */
-    void hide();
+    void setHidden(boolean hidden);
 
 }

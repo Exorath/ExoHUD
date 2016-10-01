@@ -128,7 +128,8 @@ public abstract class SimpleLocation implements HUDLocation {
     @Override
     public void setHideThreshold(Double hideThreshold) {
         this.hideThreshold = hideThreshold;
-        //update hidden state
+        if(currentDisplayPackage.getProperties().getPriority() < hideThreshold)
+            stopDisplayingCurrent();
     }
 
     @Override

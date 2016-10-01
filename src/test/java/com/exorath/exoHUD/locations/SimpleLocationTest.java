@@ -124,6 +124,7 @@ public class SimpleLocationTest {
         assertEquals(1, onDisplayCalls.size());
     }
 
+    //hide threshold
     @Test
     public void addDisplayDoesNotCallOnDisplayWhenThresholdIsHigherThenDisplayedPackage() {
         simpleLocation.setHideThreshold(1d);
@@ -140,6 +141,32 @@ public class SimpleLocationTest {
         simpleLocation.addDisplayPackage(displayPackage);
 
         assertEquals(1, onDisplayCalls.size());
+    }
+    @Test
+    public void setHideTresholdCallsOnDisplayRemoveWhenThresholdIsHigher() {
+        DisplayPackage displayPackage = new DisplayPackage(HUDPackage.create(new ArrayList<>()), DisplayProperties.create(1d, () -> Completable.never()));
+        simpleLocation.addDisplayPackage(displayPackage);
+        simpleLocation.setHideThreshold(2d);
+
+        assertEquals(1, onDisplayRemoveCalls.size());
+    }
+
+    @Test
+    public void setHideThresholdDoesNotCallsOnDisplayRemoveWhenThresholdIsLowerTest() {
+        DisplayPackage displayPackage = new DisplayPackage(HUDPackage.create(new ArrayList<>()), DisplayProperties.create(1d, () -> Completable.never()));
+        simpleLocation.addDisplayPackage(displayPackage);
+        simpleLocation.setHideThreshold(0.5d);
+
+        assertEquals(0, onDisplayRemoveCalls.size());
+    }
+
+    @Test
+    public void setHideThresholdDoesNotCallsOnDisplayRemoveWhenThresholdIsSameTest() {
+        DisplayPackage displayPackage = new DisplayPackage(HUDPackage.create(new ArrayList<>()), DisplayProperties.create(10.543d, () -> Completable.never()));
+        simpleLocation.addDisplayPackage(displayPackage);
+        simpleLocation.setHideThreshold(10.543d);
+
+        assertEquals(0, onDisplayRemoveCalls.size());
     }
 
     //DisplayPackage
@@ -257,7 +284,6 @@ public class SimpleLocationTest {
         assertEquals(1, onDisplayRemoveCalls.size());
     }
 
-    //Removeable test
     @Test
     public void addDisplayWithInstantRemoveableCallsOnDisplayRemoveWithDisplayPackageParameterTest() {
         DisplayPackage displayPackage = new DisplayPackage(HUDPackage.create(new ArrayList<>()), DisplayProperties.create(0, () -> Completable.complete()));
@@ -305,6 +331,7 @@ public class SimpleLocationTest {
         assertEquals(displayPackage, onDisplayRemoveCalls.get(0));
     }
 
+    //Display Overriding tests (tests when two displays are added which methods get called)
 
     @Test
     public void onDisplayRemoveCalledOnceWhenDisplayPackageAddedAndDisplayPackageAddedWithHigherPriorityTest() {

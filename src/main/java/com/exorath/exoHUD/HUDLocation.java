@@ -29,8 +29,6 @@ public interface HUDLocation {
      */
     DisplayPackage addText(HUDText text, DisplayProperties properties);
 
-    DisplayPackage addHUDPackage(HUDPackage hudPackage);
-
     void addDisplayPackage(DisplayPackage displayPackage);
 
     boolean removeDisplayPackage(DisplayPackage displayPackage);
@@ -48,5 +46,7 @@ public interface HUDLocation {
      * Note that as soon as this threshold is lowered the hidden texts will display again.
      */
     void setHidden(boolean hidden);
+
+    boolean isHidden();
 
 }

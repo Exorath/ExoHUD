@@ -17,22 +17,21 @@
 package com.exorath.exoHUD.locations;
 
 import com.exorath.exoHUD.*;
-import com.exorath.exoHUD.removers.NeverRemover;
+import io.reactivex.disposables.Disposable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by toonsev on 9/24/2016.
  */
-public abstract class LocationBase implements HUDLocation {
+public abstract class SimpleLocation implements HUDLocation {
     private boolean hidden = false;
     private Double hideThreshold = null;
 
     private DisplayPackage currentDisplayPackage;
-    private List<DisplayPackage> displayPackages = new ArrayList<>();
 
+    private List<DisplayPackage> displayPackages = new ArrayList<>();
+    private HashMap<DisplayPackage, Disposable> removeSubscriptionByDisplayPackage = new HashMap<>();
 
     @Override
     public DisplayPackage addText(HUDText text, DisplayProperties displayProperties) {
@@ -42,59 +41,71 @@ public abstract class LocationBase implements HUDLocation {
     }
 
     @Override
-    public DisplayPackage addHUDPackage(HUDPackage hudPackage) {
-        DisplayPackage displayPackage = new DisplayPackage(hudPackage, DisplayProperties.create(0, NeverRemover.never()));
-        addDisplayPackage(displayPackage);
-        return displayPackage;
-    }
-
-    @Override
     public void addDisplayPackage(DisplayPackage displayPackage) {
         displayPackages.add(displayPackage);
-        updateDisplay();
+        sortAndUpdateDisplay();
+        setRemover(displayPackage);
     }
 
     @Override
     public boolean removeDisplayPackage(DisplayPackage displayPackage) {
         boolean removed = displayPackages.remove(displayPackage);
         if (removed) {
-            if (currentDisplayPackage == displayPackage) {
-                currentDisplayPackage = null;
-                updateDisplay();
-            }
+            disposeRemoveSubscription(displayPackage);
+            tryStopDisplaying(displayPackage);
+            sortAndUpdateDisplay();
         }
         return removed;
     }
 
-    private void updateDisplay() {
-        displayPackages.sort(DisplayPackage.COMPARATOR_PRIORITY);
+    private boolean disposeRemoveSubscription(DisplayPackage displayPackage) {
+        Disposable disposable = removeSubscriptionByDisplayPackage.remove(displayPackage);
+        if (disposable != null)
+            disposable.dispose();
+        return disposable != null;
+    }
+
+    private void sortAndUpdateDisplay() {
+
+        displayPackages.sort(Collections.reverseOrder(DisplayPackage.COMPARATOR_PRIORITY));
         if (displayShouldUpdate()) {
+            if (currentDisplayPackage != displayPackages.get(0))
+                stopDisplayingCurrent();
             currentDisplayPackage = displayPackages.get(0);
-            updateCurrent();
+            if (!isHidden(currentDisplayPackage))
+                startDisplayingCurrent();
         }
     }
 
-    private void updateCurrent(){
-        displayPackage(displayPackages.get(0));
+    private void setRemover(DisplayPackage displayPackage) {
+        removeSubscriptionByDisplayPackage.put(displayPackage, displayPackage.getProperties().getRemover().getRemoveCompletable()
+                .subscribe(() -> removeDisplayPackage(displayPackage)));
     }
 
-    private void displayPackage(DisplayPackage displayPackage) {
-        if (currentDisplayPackage != null)
-            removePackageFromDisplay(currentDisplayPackage);
-        displayPackage.getProperties().getRemover().onDisplay();
-        if (!isHidden(displayPackage))
-            onDisplay(displayPackage);
+    public boolean isHidden() {
+        return hidden;
     }
 
-    private void removePackageFromDisplay(DisplayPackage displayPackage) {
-        displayPackage.getProperties().getRemover().onDisplayRemoved();
-        onDisplayRemove(displayPackage);
-
+    private void tryStopDisplaying(DisplayPackage displayPackage) {
+        if (currentDisplayPackage == displayPackage)
+            stopDisplayingCurrent();
     }
 
-    public abstract void onDisplayRemove(DisplayPackage displayPackage);
+    private void stopDisplayingCurrent() {
+        DisplayPackage current = currentDisplayPackage;
+        if (current == null)
+            return;
+        currentDisplayPackage = null;
+        onDisplayRemove(current);
+    }
+
+    private void startDisplayingCurrent() {
+        onDisplay(currentDisplayPackage);
+    }
 
     public abstract void onDisplay(DisplayPackage displayPackage);
+
+    public abstract void onDisplayRemove(DisplayPackage displayPackage);
 
     public abstract void onHide(boolean hidden);
 
@@ -112,7 +123,6 @@ public abstract class LocationBase implements HUDLocation {
         if (currentDisplayPackage == null)
             return true;
         return displayPackages.get(0) != currentDisplayPackage;
-
     }
 
     @Override

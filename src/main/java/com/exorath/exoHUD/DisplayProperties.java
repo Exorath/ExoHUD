@@ -16,6 +16,8 @@
 
 package com.exorath.exoHUD;
 
+import com.exorath.exoproperties.Properties;
+
 import java.util.Comparator;
 
 /**
@@ -25,11 +27,16 @@ public class DisplayProperties {
     public static final PriorityComparator COMPARATOR_PRIORITY = new PriorityComparator();
 
     private double priority;
+    private Properties meta;
     private HUDRemover remover;
 
     private DisplayProperties(double priority, HUDRemover remover){
         this.priority = priority;
         this.remover = remover;
+    }
+
+    public Properties getMeta() {
+        return meta == null ? new Properties() : meta;
     }
 
     public double getPriority() {
@@ -51,11 +58,7 @@ public class DisplayProperties {
     static class PriorityComparator implements Comparator<DisplayProperties> {
         @Override
         public int compare(DisplayProperties first, DisplayProperties second) {
-            if(first.getPriority() < second.getPriority())
-                return -1;
-            if(first.getPriority() == second.getPriority())
-                return 0;
-            return 1;
+            return Double.compare(first.getPriority(), second.getPriority());
         }
     }
 }

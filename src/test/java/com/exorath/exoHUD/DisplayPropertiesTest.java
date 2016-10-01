@@ -17,6 +17,7 @@
 package com.exorath.exoHUD;
 
 import io.reactivex.Completable;
+import org.bukkit.material.Comparator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,12 +32,15 @@ public class DisplayPropertiesTest {
     private double priority = 3.35;
     private HUDRemover remover;
 
+    private DisplayProperties.PriorityComparator priorityComparator;
     private DisplayProperties displayProperties;
 
     @Before
     public void setup(){
         this.remover = mock(HUDRemover.class);
         this.displayProperties = DisplayProperties.create(priority, remover);
+
+        this.priorityComparator = new DisplayProperties.PriorityComparator();
     }
 
     @Test
@@ -57,5 +61,21 @@ public class DisplayPropertiesTest {
     @Test
     public void getRemoverEqualsRemoverTest(){
         assertEquals(remover, displayProperties.getRemover());
+    }
+
+
+    @Test
+    public void priorityComparatorComparesDifferentPrioritiesSameAsDoubleFirstHigherThenSecondTestComparator(){
+        assertEquals(Double.compare(priority, 1), priorityComparator.compare(displayProperties, DisplayProperties.create(1, () -> Completable.never())));
+    }
+
+    @Test
+    public void priorityComparatorComparesDifferentPrioritiesSameAsDoubleFirstLowerThenSecondTestComparator(){
+        assertEquals(Double.compare(priority, 4), priorityComparator.compare(displayProperties, DisplayProperties.create(4, () -> Completable.never())));
+    }
+
+    @Test
+    public void priorityComparatorComparesDifferentPrioritiesSameAsDoubleFirstSameAsSecondTestComparator(){
+        assertEquals(Double.compare(priority, 3.35), priorityComparator.compare(displayProperties, DisplayProperties.create(3.35, () -> Completable.never())));
     }
 }

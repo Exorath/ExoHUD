@@ -16,6 +16,7 @@
 
 package com.exorath.exoHUD;
 
+import com.exorath.exoproperties.Property;
 import io.reactivex.Completable;
 import org.bukkit.material.Comparator;
 import org.junit.Before;
@@ -77,5 +78,18 @@ public class DisplayPropertiesTest {
     @Test
     public void priorityComparatorComparesDifferentPrioritiesSameAsDoubleFirstSameAsSecondTestComparator(){
         assertEquals(Double.compare(priority, 3.35), priorityComparator.compare(displayProperties, DisplayProperties.create(3.35, () -> Completable.never())));
+    }
+
+    @Test
+    public void getMetaNotNullByDefault(){
+        assertNotNull(displayProperties.getMeta());
+    }
+
+    @Test
+    public void getOnGetMetaReturnsSameValueThatWasSetOnGetMeta(){
+        Property key = Property.create();
+        Object value = "testobj";
+        displayProperties.getMeta().set(key, value);
+        assertEquals(value, displayProperties.getMeta().get(key));
     }
 }

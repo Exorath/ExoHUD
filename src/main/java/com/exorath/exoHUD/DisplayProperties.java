@@ -36,7 +36,9 @@ public class DisplayProperties {
     }
 
     public Properties getMeta() {
-        return meta == null ? new Properties() : meta;
+        if(meta == null)
+            meta = new Properties();
+        return meta;
     }
 
     public double getPriority() {

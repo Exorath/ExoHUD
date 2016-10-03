@@ -16,6 +16,7 @@
 
 package com.exorath.exoHUD.libs.title;
 
+import com.exorath.exoHUD.locations.simple.TitleLocation;
 import com.exorath.versions.api.Version;
 import com.exorath.versions.api.VersionAPI;
 import org.bukkit.Bukkit;
@@ -31,15 +32,7 @@ public class TitleLib {
         versionAPI.registerDefault(() -> new ReflectionTitleHandler(Bukkit.getServer().getClass().getName().split("\\.")[3]));
     }
 
-    public void clearTitle(Player player) {
-        TitleHandler handler = versionAPI.get();
-        if (handler != null)
-            handler.clear(player);
-    }
-
-    public void send(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String title, String subtitle) {
-        TitleHandler handler = versionAPI.get();
-        if (handler != null)
-            handler.send(player, fadeIn, stay, fadeOut, title, subtitle);
+    public TitleLocation getTitleLocation(Player player){
+        return new TitleLocation(player, versionAPI.get());
     }
 }

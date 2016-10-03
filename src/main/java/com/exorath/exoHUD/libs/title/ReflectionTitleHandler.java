@@ -16,7 +16,6 @@
 
 package com.exorath.exoHUD.libs.title;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -31,7 +30,7 @@ public class ReflectionTitleHandler implements TitleHandler {
     }
 
     @Override
-    public void send(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String title, String subtitle) {
+    public void send(Player player, int fadeIn, int stay, int fadeOut, String title, String subtitle) {
         try {
             if (title != null)
                 sendTitle(player, title, fadeIn, stay, fadeOut);
@@ -42,6 +41,7 @@ public class ReflectionTitleHandler implements TitleHandler {
 
     @Override
     public void clear(Player player) {
+
         send(player, 0, 1, 0, "", "");
     }
 

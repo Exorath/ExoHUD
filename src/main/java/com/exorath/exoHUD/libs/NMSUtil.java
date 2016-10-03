@@ -14,17 +14,19 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.libs.title;
+package com.exorath.exoHUD.libs;
 
-import com.exorath.versions.api.VersionHandler;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
 
 /**
- * Created by toonsev on 9/3/2016.
+ * Created by toonsev on 10/3/2016.
  */
-public interface TitleHandler extends VersionHandler {
+public class NMSUtil {
 
-    void send(Player player, int fadeIn, int stay, int fadeOut, String title, String subtitle);
 
-    void clear(Player player);
+    public static String getVersion() {
+        String name = Bukkit.getServer().getClass().getPackage().getName();
+        String version = name.substring(name.lastIndexOf('.') + 1);
+        return version;
+    }
 }

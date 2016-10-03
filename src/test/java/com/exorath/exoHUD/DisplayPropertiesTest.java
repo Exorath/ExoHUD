@@ -88,7 +88,7 @@ public class DisplayPropertiesTest {
     @Test
     public void getOnGetMetaReturnsSameValueThatWasSetOnGetMeta(){
         Property key = Property.create();
-        Object value = "testobj";
+        Object value = "testvalue";
         displayProperties.getMeta().set(key, value);
         assertEquals(value, displayProperties.getMeta().get(key));
     }

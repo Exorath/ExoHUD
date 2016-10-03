@@ -14,9 +14,10 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.locations;
+package com.exorath.exoHUD.locations.simple;
 
 import com.exorath.exoHUD.*;
+import com.exorath.exoHUD.locations.simple.SimpleLocation;
 import io.reactivex.Completable;
 import io.reactivex.schedulers.TestScheduler;
 import org.junit.Before;

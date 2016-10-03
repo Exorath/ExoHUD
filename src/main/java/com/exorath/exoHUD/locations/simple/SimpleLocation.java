@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.locations;
+package com.exorath.exoHUD.locations.simple;
 
 import com.exorath.exoHUD.*;
 import io.reactivex.disposables.Disposable;

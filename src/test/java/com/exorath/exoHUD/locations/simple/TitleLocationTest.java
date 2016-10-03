@@ -29,9 +29,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -72,27 +70,27 @@ public class TitleLocationTest {
     @Test
     public void addDisplayPackageWithOneHUDTextCallsSendOnceWithLegacyTextTitleTest(){
         titleLocation.addDisplayPackage(titleDisplayPackage);
-        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(0), any(), any(), eq(legacyTitle), isNull(String.class));
+        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(0), anyInt(), anyInt(), eq(legacyTitle), isNull(String.class));
     }
     @Test
     public void addDisplayPackageWithOneNullAndOneHUDTextCallsSendOnceWithLegacyTextSubtitleAndFadeInAsDefinedInDisplayPackagePropertiesMetaTest(){
         int fadeIn = 20;
         subtitleDisplayPackage.getProperties().getMeta().set(TitleLocation.FADE_IN_PROPERTY, fadeIn);
         titleLocation.addDisplayPackage(subtitleDisplayPackage);
-        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(fadeIn), any(), any(), isNull(String.class), eq(legacySubtitle));
+        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(fadeIn), anyInt(), anyInt(), isNull(String.class), eq(legacySubtitle));
     }
 
 
     @Test
     public void addDisplayPackageWithOneNullAndOneHUDTextCallsSendOnceWithLegacyTextSubtitleTest(){
         titleLocation.addDisplayPackage(subtitleDisplayPackage);
-        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(0), any(), any(), isNull(String.class), eq(legacySubtitle));
+        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(0), anyInt(), anyInt(), isNull(String.class), eq(legacySubtitle));
     }
 
     @Test
     public void addDisplayPackageWithTwoHUDTextsCallsSendOnceWithLegacyTextTitleAndSubtitleTest(){
         titleLocation.addDisplayPackage(titleSubtitleDisplayPackage);
-        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(0), any(), any(), eq(legacyTitle), eq(legacySubtitle));
+        verify(titleHandlerMock, times(1)).send(eq(playerMock), eq(0), anyInt(), anyInt(), eq(legacyTitle), eq(legacySubtitle));
     }
 
 

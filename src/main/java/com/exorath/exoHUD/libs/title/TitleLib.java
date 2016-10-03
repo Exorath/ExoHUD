@@ -16,27 +16,22 @@
 
 package com.exorath.exoHUD.libs.title;
 
+import com.exorath.exoHUD.libs.NMSUtil;
 import com.exorath.exoHUD.locations.simple.TitleLocation;
 import com.exorath.versions.api.Version;
 import com.exorath.versions.api.VersionAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
  * Created by toonsev on 8/30/2016.
  */
 public class TitleLib {
-    private VersionAPI<TitleHandler> versionAPI = VersionAPI.create(Version.create(getVersion()));
+    private VersionAPI<TitleHandler> versionAPI = VersionAPI.create(Version.create(NMSUtil.getVersion()));
 
     public TitleLib() {
-        versionAPI.registerDefault(() -> new ReflectionTitleHandler(getVersion()));
+        versionAPI.registerDefault(() -> new ReflectionTitleHandler(NMSUtil.getVersion()));
     }
 
-    private String getVersion() {
-        String name = Bukkit.getServer().getClass().getPackage().getName();
-        String version = name.substring(name.lastIndexOf('.') + 1);
-        return version;
-    }
     public TitleLocation getTitleLocation(Player player){
         return new TitleLocation(player, versionAPI.get());
     }

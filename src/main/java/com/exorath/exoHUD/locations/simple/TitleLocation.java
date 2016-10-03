@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class TitleLocation extends SimpleLocation {
     public static final Property<Integer> FADE_IN_PROPERTY = Property.create(0);
     public static final Property<Integer> FADE_OUT_PROPERTY = Property.create(0);
-    private static final int stayTime = Integer.MAX_VALUE;
+    private static final int stayTime = Integer.MAX_VALUE / 2;
 
     private Player player;
     private TitleHandler titleHandler;
@@ -58,10 +58,10 @@ public class TitleLocation extends SimpleLocation {
         if (subscription != null)
             subscription.dispose();
         int fadeOut = displayPackage.getProperties().getMeta().get(FADE_OUT_PROPERTY);
-        if (fadeOut == 0)
-            titleHandler.clear(player);
-        else if (lastTitle != null || lastSubtitle != null)
+        if (fadeOut != 0 && (lastTitle != null || lastSubtitle != null))
             titleHandler.send(player, 0, 0, 0, lastTitle, lastSubtitle);
+        else
+            titleHandler.clear(player);
     }
 
     @Override
@@ -71,6 +71,7 @@ public class TitleLocation extends SimpleLocation {
         display(displayPackage.getHudPackage(), fadeIn);
     }
 
+    //TODO; MAYBE SPECIFY DEBOUNCE SCHEDULER FOR TESTING?
     private void display(HUDPackage hudPackage, int fadeIn) {
         List<HUDText> hudTexts = hudPackage.getTexts();
         HUDText title = hudTexts.size() >= 1 ? hudTexts.get(0) : null;

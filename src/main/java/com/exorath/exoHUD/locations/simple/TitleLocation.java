@@ -26,6 +26,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -83,7 +84,7 @@ public class TitleLocation extends SimpleLocation {
             titleSubtitleObservable = getWrappedSubtitleObservable(subtitle.getTextObservable());
         } else
             return;
-        subscription = titleSubtitleObservable.subscribe(titleSubtitle -> {
+        subscription = titleSubtitleObservable.debounce(50, TimeUnit.MILLISECONDS).subscribe(titleSubtitle -> {
             String legacyTitle = titleSubtitle.getTitleComponents() == null ? null : getLegacyText(titleSubtitle.getTitleComponents());
             String legacySubtitle = titleSubtitle.getSubtitleComponents() == null ? null : getLegacyText(titleSubtitle.getSubtitleComponents());
 

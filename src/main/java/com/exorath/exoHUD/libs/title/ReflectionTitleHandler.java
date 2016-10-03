@@ -16,6 +16,7 @@
 
 package com.exorath.exoHUD.libs.title;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -24,9 +25,9 @@ import java.lang.reflect.Constructor;
  * Created by toonsev on 9/4/2016.
  */
 public class ReflectionTitleHandler implements TitleHandler {
-    private String nmsPackage;
-    public ReflectionTitleHandler(String nmsPackage){
-        this.nmsPackage = nmsPackage;
+    private String version;
+    public ReflectionTitleHandler(String version){
+        this.version = version;
     }
 
     @Override
@@ -71,14 +72,14 @@ public class ReflectionTitleHandler implements TitleHandler {
         sendPacket(player, subtitlePacket);
     }
 
-    public Class<?> getNMSClass(String name) {
+    private Class<?> getNMSClass(String name) {
         try {
-            return Class.forName(nmsPackage + "." + name);
+            return Class.forName("net.minecraft.server." + version + "." + name);
         } catch (ClassNotFoundException e) {e.printStackTrace();}
         return null;
     }
 
-    public void sendPacket(Player player, Object packet) {
+    private void sendPacket(Player player, Object packet) {
         try {
             Object handle = player.getClass().getMethod("getHandle", new Class[0]).invoke(player, new Object[0]);
             Object playerConnection = handle.getClass().getField("playerConnection").get(handle);

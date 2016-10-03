@@ -26,12 +26,17 @@ import org.bukkit.entity.Player;
  * Created by toonsev on 8/30/2016.
  */
 public class TitleLib {
-    private VersionAPI<TitleHandler> versionAPI = VersionAPI.create(Version.create("test"));
+    private VersionAPI<TitleHandler> versionAPI = VersionAPI.create(Version.create(getVersion()));
 
     public TitleLib() {
-        versionAPI.registerDefault(() -> new ReflectionTitleHandler(Bukkit.getServer().getClass().getName().split("\\.")[3]));
+        versionAPI.registerDefault(() -> new ReflectionTitleHandler(getVersion()));
     }
 
+    private String getVersion() {
+        String name = Bukkit.getServer().getClass().getPackage().getName();
+        String version = name.substring(name.lastIndexOf('.') + 1) + ".";
+        return version;
+    }
     public TitleLocation getTitleLocation(Player player){
         return new TitleLocation(player, versionAPI.get());
     }

@@ -22,7 +22,7 @@
 
     <groupId>com.exorath</groupId>
     <artifactId>ExoHUD</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <build>
         <plugins>
             <plugin>
@@ -41,7 +41,7 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>spigotmc</id>
+            <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
     </repositories>

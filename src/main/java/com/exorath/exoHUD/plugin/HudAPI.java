@@ -14,22 +14,26 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD;
+package com.exorath.exoHUD.plugin;
 
-import io.reactivex.Completable;
+import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
- * Created by toonsev on 9/15/2016.
+ * Created by toonsev on 4/28/2017.
  */
-public interface HUDRemover {
+public class HudAPI {
+    private HashMap<Player, HudPlayer>  players = new HashMap<>();
+    public HudPlayer getHudPlayer(Player player){
+        return players.get(player);
+    }
 
-    default void onDisplay(){}
-    default void onDisplayRemoved(){}
-    default void onComplete(){}
+    protected void onJoin(Player player){
+        players.put(player, new HudPlayer(player));
+    }
 
-    /**
-     * Gets a completable that completes when the HUD should be removed.
-     * @return a completable that completes when the HUD should be removed
-     */
-    Completable getRemoveCompletable();
+    protected void onLeave(Player player){
+        players.remove(player);
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Exorath
+ * Copyright 2017 Exorath
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * Created by toonsev on 10/3/2016.
  */
 public class ActionBarLocation extends SimpleLocation {
-    public static final Property<Boolean> FADE_OUT_PROPERTY = Property.create(true);
+    public static final Property<Boolean> FADE_OUT_PROPERTY = Property.create(false);
     private static final int REFRESH_TIME = 3;
     private static final TimeUnit REFRESH_TIME_UNIT = TimeUnit.SECONDS;
 
@@ -93,6 +93,8 @@ public class ActionBarLocation extends SimpleLocation {
                 .subscribe(textComponents -> {
                     lastMessage = textComponents.toArray(new TextComponent[textComponents.size()]);
                     actionBarHandler.send(player, lastMessage);
+                    if(scheduledRefresh != null)
+                        scheduledRefresh.dispose();
                     sendUpdate(current);
                 });
 

@@ -14,25 +14,31 @@
  *    limitations under the License.
  */
 
-package com.exorath.exoHUD.libs.actionbar;
+package com.exorath.exoHUD.plugin;
 
-import com.exorath.exoHUD.libs.NMSUtil;
+import com.exorath.exoHUD.libs.actionbar.SpigotActionBarHandler;
+import com.exorath.exoHUD.libs.title.ReflectionTitleHandler;
 import com.exorath.exoHUD.locations.simple.ActionBarLocation;
 import com.exorath.exoHUD.locations.simple.TitleLocation;
-import com.exorath.versions.api.Version;
-import com.exorath.versions.api.VersionAPI;
 import org.bukkit.entity.Player;
 
 /**
- * Created by toonsev on 10/3/2016.
+ * Created by toonsev on 4/28/2017.
  */
-public class ActionBarLib {
-    private VersionAPI<ActionBarHandler> versionAPI = VersionAPI.create(Version.create(NMSUtil.getVersion()));
+public class HudPlayer {
+    private ActionBarLocation actionBarLocation;
+    private TitleLocation titleLocation;
 
-    public ActionBarLib() {
-        versionAPI.registerDefault(() -> new SpigotActionBarHandler());
+    public HudPlayer(Player player) {
+        this.actionBarLocation = new ActionBarLocation(player, new SpigotActionBarHandler());
+        this.titleLocation = new TitleLocation(player, new ReflectionTitleHandler(""));
     }
-    public ActionBarLocation getActionBarLocation(Player player){
-        return new ActionBarLocation(player, versionAPI.get());
+
+    public ActionBarLocation getActionBarLocation() {
+        return actionBarLocation;
+    }
+
+    public TitleLocation getTitleLocation() {
+        return titleLocation;
     }
 }

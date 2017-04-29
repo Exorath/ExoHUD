@@ -1,0 +1,4 @@
+name: ExoHUD
+main: com.exorath.exoHUD.plugin.HudPlugin
+version: 0.0.1
+author: Toon Sevrin

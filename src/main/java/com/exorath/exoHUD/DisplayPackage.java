@@ -16,7 +16,10 @@
 
 package com.exorath.exoHUD;
 
+import net.md_5.bungee.api.chat.TextComponent;
+
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by toonsev on 9/24/2016.
@@ -51,4 +54,5 @@ public class DisplayPackage {
             return comparator.compare(first.getProperties(), second.getProperties());
         }
     }
+
 }

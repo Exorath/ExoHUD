@@ -18,6 +18,7 @@ package com.exorath.exoHUD.plugin;
 
 import com.exorath.exoHUD.libs.actionbar.SpigotActionBarHandler;
 import com.exorath.exoHUD.libs.title.ReflectionTitleHandler;
+import com.exorath.exoHUD.locations.row.ScoreboardLocation;
 import com.exorath.exoHUD.locations.simple.ActionBarLocation;
 import com.exorath.exoHUD.locations.simple.TitleLocation;
 import org.bukkit.entity.Player;
@@ -28,10 +29,12 @@ import org.bukkit.entity.Player;
 public class HudPlayer {
     private ActionBarLocation actionBarLocation;
     private TitleLocation titleLocation;
+    private ScoreboardLocation scoreboardLocation;
 
     public HudPlayer(Player player) {
         this.actionBarLocation = new ActionBarLocation(player, new SpigotActionBarHandler());
         this.titleLocation = new TitleLocation(player, new ReflectionTitleHandler(""));
+        this.scoreboardLocation = new ScoreboardLocation(player);
     }
 
     public ActionBarLocation getActionBarLocation() {
@@ -40,5 +43,9 @@ public class HudPlayer {
 
     public TitleLocation getTitleLocation() {
         return titleLocation;
+    }
+
+    public ScoreboardLocation getScoreboardLocation() {
+        return scoreboardLocation;
     }
 }

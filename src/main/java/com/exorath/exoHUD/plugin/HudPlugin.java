@@ -17,6 +17,7 @@
 package com.exorath.exoHUD.plugin;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,12 +36,12 @@ public class HudPlugin extends JavaPlugin implements Listener{
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event){
         hudAPI.onJoin(event.getPlayer());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerBedLeaveEvent event){
         hudAPI.onLeave(event.getPlayer());
     }

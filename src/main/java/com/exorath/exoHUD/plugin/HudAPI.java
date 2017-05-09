@@ -24,20 +24,27 @@ import java.util.HashMap;
  * Created by toonsev on 4/28/2017.
  */
 public class HudAPI {
-    private HashMap<Player, HudPlayer>  players = new HashMap<>();
-    public HudPlayer getHudPlayer(Player player){
+    private HashMap<Player, HudPlayer> players = new HashMap<>();
+
+    public HudPlayer getHudPlayer(Player player) {
+        addIfNotPresent(player);
         return players.get(player);
     }
 
-    protected void onJoin(Player player){
-        players.put(player, new HudPlayer(player));
+    protected void onJoin(Player player) {
+        addIfNotPresent(player);
     }
 
-    protected void onLeave(Player player){
+    private void addIfNotPresent(Player player) {
+        if (!players.containsKey(player))
+            players.put(player, new HudPlayer(player));
+    }
+
+    protected void onLeave(Player player) {
         players.remove(player);
     }
 
-    public static HudAPI getInstance(){
+    public static HudAPI getInstance() {
         return HudPlugin.getInstance().getHudAPI();
     }
 }

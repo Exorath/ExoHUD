@@ -157,7 +157,7 @@ public class ScoreboardBase {
         return enabled;
     }
 
-    public void add(Player player) {
+    public void addPlayer(Player player) {
         this.player = player;
         add();
     }
@@ -167,7 +167,7 @@ public class ScoreboardBase {
     }
 
     public void add() {
-        if (player != null)
+        if (player == null)
             return;
         enabled = true;
         player.setScoreboard(scoreboard);

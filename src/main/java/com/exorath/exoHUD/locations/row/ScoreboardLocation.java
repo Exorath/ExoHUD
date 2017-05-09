@@ -44,7 +44,7 @@ public class ScoreboardLocation implements HUDLocation {
     public ScoreboardLocation(Player player) {
         this.player = player;
         this.scoreboardBase = new ScoreboardBase("");
-        scoreboardBase.add(player);
+        scoreboardBase.addPlayer(player);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ScoreboardLocation implements HUDLocation {
         if (hidden)
             scoreboardBase.remove(player);
         else
-            scoreboardBase.add(player);
+            scoreboardBase.addPlayer(player);
     }
 
     @Override

@@ -47,4 +47,8 @@ public class HudPlugin extends JavaPlugin implements Listener{
     public static HudPlugin getInstance() {
         return instance;
     }
+
+    public HudAPI getHudAPI() {
+        return hudAPI;
+    }
 }

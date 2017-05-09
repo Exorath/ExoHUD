@@ -36,4 +36,8 @@ public class HudAPI {
     protected void onLeave(Player player){
         players.remove(player);
     }
+
+    public static HudAPI getInstance(){
+        return HudPlugin.getInstance().getHudAPI();
+    }
 }

@@ -19,11 +19,16 @@ package com.exorath.exoHUD.locations.row;
 import com.exorath.exoHUD.*;
 import com.exorath.exoHUD.libs.scoreboard.ScoreboardBase;
 import com.exorath.exoHUD.libs.scoreboard.ScoreboardEntry;
+import com.exorath.exoHUD.locations.simple.SimpleLocation;
+import io.reactivex.*;
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by toonsev on 5/9/2017.
@@ -34,6 +39,7 @@ public class ScoreboardLocation implements HUDLocation {
     private Double hideThreshold = null;//still requiers implementation
 
     private ScoreboardBase scoreboardBase;
+    private ScoreboardTitleLocation sbTitleLocation = new ScoreboardTitleLocation();
 
 
     private TreeSet<DisplayPackage> displayPackages = new TreeSet<>(Collections.reverseOrder(DisplayPackage.COMPARATOR_PRIORITY));
@@ -105,6 +111,13 @@ public class ScoreboardLocation implements HUDLocation {
         return hidden;
     }
 
+    public DisplayPackage addTitle(HUDText hudText, DisplayProperties displayProperties){
+        return sbTitleLocation.addText(hudText, displayProperties);
+    }
+
+    public boolean removeTitle(DisplayPackage displayPackage){
+         return sbTitleLocation.removeDisplayPackage(displayPackage);
+    }
 
     private void setRemover(DisplayPackage displayPackage) {
         removeSubscriptionByDisplayPackage.put(displayPackage, displayPackage.getProperties().getRemover().getRemoveCompletable()
@@ -146,6 +159,40 @@ public class ScoreboardLocation implements HUDLocation {
         StringBuilder legacyBuilder = new StringBuilder();
         components.forEach(component -> legacyBuilder.append(component.toLegacyText()));
         return legacyBuilder.toString();
+    }
+
+    private class ScoreboardTitleLocation extends SimpleLocation {
+        private DisplayPackage current;
+        private Disposable subscription;
+
+        @Override
+        public void onDisplay(DisplayPackage displayPackage) {
+            this.current = displayPackage;
+            List<HUDText> hudTexts = displayPackage.getHudPackage().getTexts();
+            if (hudTexts.size() == 0)
+                return;
+            HUDText barText = hudTexts.get(0);
+            Observable<List<TextComponent>> titleSubtitleObservable = barText.getTextObservable();
+
+            subscription = titleSubtitleObservable.debounce(50, TimeUnit.MILLISECONDS)
+                    .subscribe(textComponents ->
+                            scoreboardBase.setTitle(getLegacyText(textComponents)));
+
+        }
+
+        @Override
+        public void onDisplayRemove(DisplayPackage displayPackage) {
+            if (current != displayPackage)
+                return;
+            if (subscription != null)
+                subscription.dispose();
+            scoreboardBase.setTitle("");
+        }
+
+        @Override
+        public void onHide(boolean hidden) {
+
+        }
     }
 
 }

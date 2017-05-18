@@ -87,6 +87,7 @@ public class BossBarLocation extends SimpleLocation{
         if (subscription != null)
             subscription.dispose();
         bossBar.removeAll();
+        bossBar = null;
     }
 
     @Override

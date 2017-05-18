@@ -20,6 +20,7 @@ import com.exorath.exoHUD.libs.actionbar.SpigotActionBarHandler;
 import com.exorath.exoHUD.libs.title.ReflectionTitleHandler;
 import com.exorath.exoHUD.locations.row.ScoreboardLocation;
 import com.exorath.exoHUD.locations.simple.ActionBarLocation;
+import com.exorath.exoHUD.locations.simple.BossBarLocation;
 import com.exorath.exoHUD.locations.simple.TitleLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -31,11 +32,17 @@ public class HudPlayer {
     private ActionBarLocation actionBarLocation;
     private TitleLocation titleLocation;
     private ScoreboardLocation scoreboardLocation;
+    private BossBarLocation bossBarLocation;
 
     public HudPlayer(Player player) {
         this.actionBarLocation = new ActionBarLocation(player, new SpigotActionBarHandler());
         this.titleLocation = new TitleLocation(player, new ReflectionTitleHandler(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]));
         this.scoreboardLocation = new ScoreboardLocation(player);
+        this.bossBarLocation = new BossBarLocation(player);
+    }
+
+    public BossBarLocation getBossBarLocation() {
+        return bossBarLocation;
     }
 
     public ActionBarLocation getActionBarLocation() {

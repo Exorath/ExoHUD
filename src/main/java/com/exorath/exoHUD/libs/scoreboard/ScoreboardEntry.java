@@ -80,7 +80,10 @@ public class ScoreboardEntry {
     }
 
     public void update(String newName) {
-        int value = getValue();
+       update(newName, getValue());
+    }
+
+    public void update(String newName, int value){
         if (origName != null && newName.equals(origName))
             for (int i = 0; i < count; i++)
                 newName = ChatColor.RESET + newName;

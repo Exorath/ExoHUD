@@ -153,7 +153,7 @@ public class ScoreboardLocation implements HUDLocation {
 
     private void display(HUDText hudText, int priority) {
         ScoreboardEntry entry = scoreboardBase.add("To be determined", priority);
-        hudText.getTextObservable().subscribe(textComponents -> entry.update(getLegacyText(textComponents)));
+        hudText.getTextObservable().subscribe(textComponents -> entry.update(getLegacyText(textComponents), priority));
     }
 
     private static String getLegacyText(List<TextComponent> components) {

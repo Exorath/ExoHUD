@@ -138,6 +138,7 @@ public class ScoreboardLocation implements HUDLocation {
                     entriesByHudText.get(hudText).setValue(remainingLines);
                 else
                     display(hudText, remainingLines);
+                remainingLines--;
             }
         }
         for (HUDText hudText : entriesByHudText.keySet())//Remove all obsolete entries

@@ -95,7 +95,7 @@ public class ScoreboardEntry {
         if (score != null)
             score.getScoreboard().resetScores(score.getEntry());
 
-        if (team != null)
+        if (team != null && scoreboard.getScoreboard().getTeams().contains(team))
             team.unregister();
     }
 

@@ -59,11 +59,24 @@ public class HologramLocation implements HUDLocation {
         for (int i = 0; i < visiblePackages.size(); i++) {
             if (visiblePackages.get(i).getProperties().getPriority() >= displayPackage.getProperties().getPriority())
                 continue;
-            visiblePackages.add(i, displayPackage);
-            setRemover(displayPackage);
+            displayPackage(i, displayPackage);
             return;
         }
-        visiblePackages.add(displayPackage);
+        displayPackage(null, displayPackage);
+    }
+
+    private void displayPackage(Integer index, DisplayPackage displayPackage) {
+        if (index != null)
+            visiblePackages.add(index, displayPackage);
+        else
+            visiblePackages.add(displayPackage);
+        ListIterator<HUDText> listIterator = displayPackage.getHudPackage().getTexts().listIterator(displayPackage.getHudPackage().getTexts().size());
+        while (listIterator.hasPrevious()) {
+            HUDText text = listIterator.previous();
+            TextLine line = index != null ? hologram.insertTextLine(index, "") : hologram.appendTextLine("");
+            linesByHUDText.put(text, line);
+            display(text, line);
+        }
         setRemover(displayPackage);
     }
 
@@ -84,6 +97,7 @@ public class HologramLocation implements HUDLocation {
     }
 
     private void tryStopDisplaying(DisplayPackage displayPackage) {
+
         displayPackage.getHudPackage().getTexts().forEach(hudText -> removeText(hudText));
     }
 
@@ -126,8 +140,7 @@ public class HologramLocation implements HUDLocation {
         linesByHUDText.remove(hudText);
     }
 
-    private void display(HUDText hudText) {
-        TextLine textLine = hologram.appendTextLine("");
+    private void display(HUDText hudText, TextLine textLine) {
         hudText.getTextObservable().subscribe(textComponents -> textLine.setText(getLegacyText(textComponents)));
     }
 

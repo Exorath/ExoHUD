@@ -113,5 +113,11 @@
             <artifactId>ExoProperties</artifactId>
             <version>1.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.exorath</groupId>
+            <artifactId>ExoHolograms</artifactId>
+            <version>0.0.18</version>
+        </dependency>
     </dependencies>
 </project>

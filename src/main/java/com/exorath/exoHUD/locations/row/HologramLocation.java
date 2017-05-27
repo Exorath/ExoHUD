@@ -153,4 +153,8 @@ public class HologramLocation implements HUDLocation {
     public void teleport(Location location){
         hologram.teleport(location);
     }
+
+    public Location getLocation(){
+        return hologram.getLocation();
+    }
 }

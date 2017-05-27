@@ -150,5 +150,7 @@ public class HologramLocation implements HUDLocation {
         return legacyBuilder.toString();
     }
 
-
+    public void teleport(Location location){
+        hologram.teleport(location);
+    }
 }

@@ -16,6 +16,7 @@
 
 package com.exorath.exoHUD.plugin;
 
+import com.exorath.exoHolograms.api.HologramsAPI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -33,9 +34,11 @@ public class HudPlugin extends JavaPlugin implements Listener{
     public void onEnable() {
         HudPlugin.instance = this;
         this.hudAPI = new HudAPI();
+        HologramsAPI.getInstance(this);
 
     }
 
+    //currently not being called due to lazy init
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event){
         hudAPI.onJoin(event.getPlayer());

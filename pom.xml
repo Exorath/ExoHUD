@@ -117,7 +117,7 @@
         <dependency>
             <groupId>com.github.exorath</groupId>
             <artifactId>ExoHolograms</artifactId>
-            <version>0.0.18</version>
+            <version>0.0.20</version>
         </dependency>
     </dependencies>
 </project>
